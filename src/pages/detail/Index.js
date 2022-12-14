@@ -1,4 +1,3 @@
-import { Redirect } from "wouter";
 import useSingleGif from "../../hook/useSingleGif";
 
 function Detail({ params }) {
