@@ -1,15 +1,17 @@
 import { Link } from "wouter";
+import Fav from "../fav/Index";
 
 export default function MyGif({ gifs }) {
   return gifs.map((g) => {
     return (
       <>
-        <Link key={g.id} href={`/Detail/${g.id}`}>
-          <div className="list-item" key={g.id}>
+        <div className="list-item" key={g.id}>
+          <Link key={g.id} href={`/Detail/${g.id}`}>
             <img className="gif-img" src={g.url} alt={g.id} />
-            <span className="gif-text">{g.id}</span>
-          </div>
-        </Link>
+          </Link>
+          <span className="gif-text">{g.id}</span>
+          <Fav id={g.id} />
+        </div>
       </>
     );
   });
