@@ -13,8 +13,10 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    username: "",
-    password: "",
+    defaultValues: {
+      username: "johnnnn",
+      password: "",
+    },
   });
 
   useEffect(() => {
@@ -30,9 +32,6 @@ export default function Login() {
     <>
       <FlexboxGrid justify="center">
         <FlexboxGrid.Item colspan={12}>
-          {isLoginLoading ? <div>Cargando ...</div> : ""}
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={12}>
           <Panel header={<h3>Login</h3>} bordered>
             <Form fluid onSubmit={handleSubmit(onSubmit)}>
               <Form.Group>
@@ -40,16 +39,19 @@ export default function Login() {
                 <Controller
                   name="username"
                   control={control}
+                  rules={{ required: true }}
                   render={({ field }) => (
                     <Form.Control {...field} name="username" />
                   )}
                 />
+                {errors.username && <span>Username is required</span>}
               </Form.Group>
               <Form.Group>
                 <Form.ControlLabel>Password</Form.ControlLabel>
                 <Controller
                   name="password"
                   control={control}
+                  rules={{ required: true }}
                   render={({ field }) => (
                     <Form.Control
                       {...field}
@@ -59,11 +61,12 @@ export default function Login() {
                     />
                   )}
                 />
+                {errors.password && <span>Password is required</span>}
               </Form.Group>
               <Form.Group>
                 <ButtonToolbar>
                   <Button type="submit" appearance="primary">
-                    Sign in
+                    {isLoginLoading ? "Cargando ..." : "Sign in"}
                   </Button>
 
                   <Button appearance="link">Forgot password?</Button>
@@ -72,8 +75,11 @@ export default function Login() {
             </Form>
           </Panel>
         </FlexboxGrid.Item>
+      </FlexboxGrid>
+
+      <FlexboxGrid justify="center">
         <FlexboxGrid.Item colspan={12}>
-          {isLoginHasError ? <div>Credenciales erroneas</div> : ""}
+          {isLoginHasError ? "Las credenciales no son correctas" : ""}
         </FlexboxGrid.Item>
       </FlexboxGrid>
     </>
