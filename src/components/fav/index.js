@@ -3,17 +3,27 @@ import useUser from "../../hook/useUser";
 import { useLocation } from "wouter";
 
 export default function Fav({ id }) {
-  const { isLogged, favs, addFav } = useUser();
+  const { isLogged, favs, addFav, delFav } = useUser();
   const [, navigate] = useLocation();
+
+  const isFaved = favs.some((favId) => favId === id);
+
+  const [label, emoji] = isFaved ? ["Remove Gif", "❌"] : ["Add Gif", "❤️"];
 
   const handleClick = () => {
     if (!isLogged) return navigate("/login");
-    // TODO Add Fav recibir el id y enviarlo a la funcion addFav
+    if (isFaved) {
+      delFav({ id });
+    } else {
+      addFav({ id });
+    }
   };
 
   return (
     <button onClick={handleClick}>
-      <span>add</span>
+      <span aria-label={label} role="img">
+        {emoji}
+      </span>
     </button>
   );
 }

@@ -2,6 +2,7 @@ import UserContextProvider from "../context/UserContext";
 import { useContext, useState } from "react";
 import loginService from "../services/login";
 import addFavService from "../services/addFav";
+import deleteFavService from "../services/delFav";
 
 export default function useUser() {
   const { jwt, setJwt, setFavs, favs } = useContext(UserContextProvider);
@@ -40,6 +41,14 @@ export default function useUser() {
       });
   };
 
+  const delFav = ({ id }) => {
+    deleteFavService({ id, jwt })
+      .then((favs) => setFavs(favs))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return {
     login,
     logout,
@@ -47,5 +56,7 @@ export default function useUser() {
     isLoginHasError: state.error,
     isLogged: Boolean(jwt),
     addFav,
+    delFav,
+    favs,
   };
 }

@@ -11,7 +11,7 @@ export default function MyGif({ gifs }) {
               <img className="gif-img" src={g.url} alt={g.id} />
             </Link>
             <span className="gif-text">{g.id}</span>
-            <Fav />
+            <Fav id={g.id} />
           </div>
         </div>
       </>
